@@ -1,0 +1,10 @@
+data/
+fairvit-env/
+.vscode/
+__pycache__/
+*.pth
+*.pt
+*.ckpt
+*.zip
+*.tar
+*.gz
