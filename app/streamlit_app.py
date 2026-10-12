@@ -61,7 +61,7 @@ HERO_ART_SVG = (
     '<path d="M326 34 V58 M314 46 H338" stroke="#111" stroke-width="6"/>'
     # light box + film
     '<rect x="52" y="38" width="214" height="258" rx="22" fill="#fff" opacity=".93"/>'
-    '<g transform="translate(-6 -2)"><rect x="76" y="56" width="178" height="218" rx="12" fill="#10303d"/>' + CHEST_G + '</g>'
+    '<g transform="translate(-6 3)"><rect x="76" y="56" width="178" height="218" rx="12" fill="#10303d"/>' + CHEST_G + '</g>'
     # stethoscope
     '<path d="M286 262 C286 214 330 214 330 170" stroke="#fff" stroke-width="6"/>'
     '<path d="M330 170 C330 146 350 146 350 126 M330 170 C330 146 310 146 310 126" stroke="#fff" stroke-width="6"/>'
@@ -94,7 +94,6 @@ IC_STETH = ic('<path d="M7 4 V10 a4 4 0 0 0 8 0 V4"/><path d="M11 14 V16 a4 4 0 
 IC_DATA = ic('<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6 V18 c0 1.7 3.1 3 7 3 s7 -1.3 7 -3 V6"/><path d="M5 12 c0 1.7 3.1 3 7 3 s7 -1.3 7 -3"/>', '#111', 22)
 IC_BALANCE = ic('<path d="M12 4 V20 M7 20 H17 M5 8 H19"/><path d="M5 8 L3 14 a3 3 0 0 0 6 0 Z"/><path d="M19 8 L17 14 a3 3 0 0 0 6 0 Z"/>', '#111', 22)
 IC_HUMAN = ic('<circle cx="12" cy="8" r="3.5"/><path d="M5 20 c0 -4 3 -6 7 -6 s7 2 7 6"/>', '#111', 22)
-IC_PLAY = ic('<path d="M8 5 L19 12 L8 19 Z" fill="#fff" stroke="none"/>', '#fff', 22)
 
 LUNG_PATH = ('M14 3 C6 3 2 14 2 22 C2 28 6 30 10 28 C14 26 14 20 14 16 Z '
              'M18 3 C26 3 30 14 30 22 C30 28 26 30 22 28 C18 26 18 20 18 16 Z')
@@ -120,7 +119,6 @@ def avatars():
 def hero(title_html, join_label, join_num, join_unit, cta):
     return (
         '<div class="hero"><div class="hero-title">' + title_html + '</div>'
-        f'<div class="hero-play"><span class="play">{IC_PLAY}</span><span>Explore now</span></div>'
         f'<div class="hero-join"><small>{escape(join_label)}</small><div class="join-row">{avatars()}'
         f'<div class="join-num"><b>{escape(join_num)}</b><small>{escape(join_unit)}</small></div></div></div>'
         f'<span class="hero-cta">{escape(cta)}<i><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 H19 M13 6 L19 12 L13 18"/></svg></i></span>'
@@ -215,16 +213,26 @@ h1,h2,h3{letter-spacing:-.04em;color:var(--ink)}
 [data-testid="stSidebarHeader"],[data-testid="stSidebarCollapseButton"],[data-testid="stSidebarCollapsedControl"]{display:none!important}
 [data-testid="stSidebarUserContent"]{padding:1.8rem .6rem 1rem}
 [data-testid="stSidebar"] [data-testid="stRadio"]{display:flex;justify-content:center}
-[data-testid="stSidebar"] [role="radiogroup"]{gap:14px;align-items:center}
-[data-testid="stSidebar"] [role="radiogroup"]>label{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;padding:0;margin:0;cursor:pointer;transition:background .15s}
+[data-testid="stSidebar"] [role="radiogroup"]{gap:12px;align-items:center}
+[data-testid="stSidebar"] [role="radiogroup"]>label{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:72px;height:76px;border-radius:24px;padding:0;margin:0;cursor:pointer;transition:background .15s}
 [data-testid="stSidebar"] [role="radiogroup"]>label>div:first-of-type{display:none}
 [data-testid="stSidebar"] [role="radiogroup"]>label>div:last-of-type{display:none}
-[data-testid="stSidebar"] [role="radiogroup"]>label::before{content:"";width:23px;height:23px;background-size:contain;background-repeat:no-repeat;background-position:center}
+[data-testid="stSidebar"] [role="radiogroup"]>label::before{content:"";width:24px;height:24px;background-size:contain;background-repeat:no-repeat;background-position:center}
+[data-testid="stSidebar"] [role="radiogroup"]>label::after{font-size:11px;font-weight:500;color:#6b7478;letter-spacing:-.01em}
+[data-testid="stSidebar"] [role="radiogroup"]>label:nth-of-type(1)::after{content:"Analyse"}
+[data-testid="stSidebar"] [role="radiogroup"]>label:nth-of-type(2)::after{content:"Model"}
+[data-testid="stSidebar"] [role="radiogroup"]>label:has(input:checked)::after{color:#fff}
 [data-testid="stSidebar"] [role="radiogroup"]>label:hover{background:#eef5f8}
 [data-testid="stSidebar"] [role="radiogroup"]>label:has(input:checked){background:var(--olive);box-shadow:0 10px 22px #86a80f55}
-.rail-brand{display:flex;justify-content:center;margin:0 0 34px}
-.rail-div{height:1px;background:#e5ecef;margin:22px 10px}
-.rail-bottom{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:34vh}
+.rail-brand{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 0 30px}
+.rail-brand small{font-size:10px;letter-spacing:.14em;color:#8b9599;font-weight:600}
+.rail-div{height:1px;background:#e5ecef;margin:24px 12px}
+.rail-label{text-align:center;font-size:9px;letter-spacing:.14em;color:#9aa5aa;font-weight:600;margin-bottom:14px}
+.rail-stack{display:flex;flex-direction:column;align-items:center;gap:14px}
+.rail-stack span{width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;pointer-events:none}
+.rail-stack span:nth-child(1){background:#e3f3ec}.rail-stack span:nth-child(2){background:#fbe6ec}.rail-stack span:nth-child(3){background:#e2ecf8}.rail-stack span:nth-child(4){background:#f1f6cf}
+.rail-badge{display:flex;flex-direction:column;align-items:center;gap:6px;background:#0d0d0d;color:var(--lime);border-radius:22px;padding:12px 4px;width:72px;font-size:9px;letter-spacing:.12em;font-weight:600;text-align:center;line-height:1.3}
+.rail-bottom{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:9vh}
 .rail-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#bfeadd,#8fc7e3);display:flex;align-items:center;justify-content:center;font-weight:600;color:#0d3b4a;border:2px solid #fff;box-shadow:0 4px 12px #1f4a5a22}
 
 /* ===== Greeting bar ===== */
@@ -236,10 +244,8 @@ h1,h2,h3{letter-spacing:-.04em;color:var(--ink)}
 .blackpill{display:inline-flex;align-items:center;gap:10px;background:#0d0d0d;color:var(--lime);border-radius:40px;padding:15px 24px;font-size:14px;font-weight:500;white-space:nowrap}
 
 /* ===== Hero ===== */
-.hero{position:relative;overflow:hidden;min-height:300px;border-radius:30px;background:linear-gradient(120deg,#adc9cc 0%,#8db3bb 55%,#6e99a5 100%);padding:30px 34px;box-sizing:border-box;width:100%;color:#fff}
-.hero-title{font-size:44px;line-height:1.06;font-weight:300;letter-spacing:-.035em;color:#fff;max-width:52%}
-.hero-play{position:absolute;left:34px;top:50%;display:flex;align-items:center;gap:12px;font-size:15px;color:#f2fbfc;margin-top:6px}
-.hero-play .play{width:38px;height:38px;border-radius:50%;background:#ffffff40;display:inline-flex;align-items:center;justify-content:center}
+.hero{position:relative;overflow:hidden;min-height:330px;border-radius:30px;background:linear-gradient(120deg,#adc9cc 0%,#8db3bb 55%,#6e99a5 100%);padding:30px 34px;box-sizing:border-box;width:100%;color:#fff}
+.hero-title{font-size:42px;line-height:1.08;font-weight:300;letter-spacing:-.035em;color:#fff;max-width:50%}
 .hero-join{position:absolute;left:34px;bottom:26px}
 .hero-join>small{display:block;font-size:12px;color:#eaf6f8;margin-bottom:8px}
 .join-row{display:flex;align-items:center;gap:12px}
@@ -247,16 +253,16 @@ h1,h2,h3{letter-spacing:-.04em;color:var(--ink)}
 .av{position:absolute;top:0;width:34px;height:34px;border-radius:50%;border:2px solid #fff;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box}
 .join-num b{font-size:22px;font-weight:500;letter-spacing:-.03em;display:block;line-height:1}
 .join-num small{font-size:12px;color:#eaf6f8}
-.hero-cta{position:absolute;right:26px;bottom:24px;display:inline-flex;align-items:center;gap:22px;background:#0d0d0d;color:#fff;border-radius:40px;padding:8px 8px 8px 28px;font-size:15px;font-weight:500}
+.hero-cta{position:absolute;right:26px;bottom:22px;z-index:2;display:inline-flex;align-items:center;gap:22px;background:#0d0d0d;color:#fff;border-radius:40px;padding:8px 8px 8px 28px;font-size:15px;font-weight:500}
 .hero-cta i{width:42px;height:42px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center}
-.hero-art{position:absolute;right:12px;top:14px;width:300px;height:237px;pointer-events:none}
+.hero-art{position:absolute;right:26px;top:18px;width:262px;height:207px;pointer-events:none}
 
 /* ===== Blue result card ===== */
 .res{background:#8fc7e3;background-image:radial-gradient(circle at 30% 20%,#a3d3ea 0%,transparent 60%);border-radius:30px;padding:26px 28px;min-height:300px;box-sizing:border-box;color:#fff;display:flex;flex-direction:column;width:100%}
 .res-top{display:flex;gap:18px;align-items:flex-start}
 .res-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
 .res-copy b{font-size:13px;font-weight:600;color:#10303d}
-.res-copy span{font-size:12px;line-height:1.5;color:#e9f6fb}
+.res-copy span{font-size:12px;line-height:1.5;color:#fff}
 .res-copy .well{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:var(--lime);color:#111;border-radius:30px;padding:9px 15px;font-size:12px;font-weight:600;margin-top:10px;line-height:1.3}
 .res-copy .well i{display:inline-flex;flex:none;width:22px;height:22px;border-radius:50%;background:#fff6;align-items:center;justify-content:center}
 .res-grid{flex:none;width:52%;max-width:240px}
@@ -299,7 +305,7 @@ h1,h2,h3{letter-spacing:-.04em;color:var(--ink)}
 .thr-note{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
 .thr-note small{font-size:10px;color:#7d888d;line-height:1.35}
 .thr-note b{font-size:14px;font-weight:600;margin-top:6px}
-.viewer{background:#f1f8fb;border:1px dashed #b9d3de;border-radius:22px;min-height:210px;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;box-sizing:border-box;width:100%}
+.viewer{margin-bottom:10px;background:#f1f8fb;border:1px dashed #b9d3de;border-radius:22px;min-height:210px;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;box-sizing:border-box;width:100%}
 .viewer .film{width:78px;height:94px;margin:0 auto 12px}
 .viewer strong{display:block;font-size:17px;font-weight:500;color:#10303d;margin-bottom:6px}
 .viewer .muted{font-size:13px;color:#66737a}
@@ -307,7 +313,7 @@ h1,h2,h3{letter-spacing:-.04em;color:var(--ink)}
 
 /* ===== Widgets ===== */
 [data-testid="stFileUploaderDropzone"]{border:1px dashed #b9d3de;background:#f3f9fb;border-radius:20px}
-[data-testid="stFileUploaderDropzone"] button{border-radius:30px;border:1px solid #cfdde4;background:#fff;color:#0d0d0d}
+[data-testid="stFileUploaderDropzone"] button{border-radius:30px;border:1px solid #cfdde4;background:#fff;color:#0d0d0d;white-space:nowrap;padding:.4rem 1rem}
 .stButton>button[kind="primary"]{background:#0d0d0d;color:#fff;border:0;border-radius:40px;min-height:54px;font-weight:500;font-size:15px;width:100%}
 .stButton>button[kind="primary"]:hover{background:#26292b;color:var(--lime)}
 .stButton>button:disabled{background:#e7eef1!important;color:#93a0a6!important}
@@ -329,12 +335,12 @@ h1,h2,h3{letter-spacing:-.04em;color:var(--ink)}
 [data-testid="stColumn"]{min-width:0}
 [data-testid="stMainBlockContainer"]>div>[data-testid="stVerticalBlock"]{gap:1rem}
 
-@media(max-width:1100px){.ctx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-title{max-width:60%;font-size:36px}}
+@media(max-width:1100px){.ctx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-title{max-width:56%;font-size:34px}}
 @media(max-width:768px){
  [data-testid="stSidebar"]{width:72px!important;min-width:72px!important}
  .block-container,[data-testid="stMainBlockContainer"]{padding:1.6rem 1rem}
  .greet-actions{margin-right:0;flex-wrap:wrap}.searchpill{min-width:0;flex:1}
- .hero{min-height:360px;padding:22px}.hero-title{font-size:30px;max-width:100%}.hero-art{display:none}.hero-play{display:none}
+ .hero{min-height:360px;padding:22px}.hero-title{font-size:30px;max-width:100%}.hero-art{display:none}
  .hero-cta{left:22px;right:auto}.hero-join{bottom:84px;left:22px}
  .ctx-grid{grid-template-columns:1fr}.res-num{font-size:48px}.big{font-size:48px}
 }
@@ -384,9 +390,9 @@ def load_model():
     return model
 preprocess=transforms.Compose([transforms.Resize((224,224)),transforms.ToTensor()])
 with st.sidebar:
- st.markdown(f'<div class="rail-brand">{BRAND_SVG}</div>',unsafe_allow_html=True)
+ st.markdown(f'<div class="rail-brand">{BRAND_SVG}<small>FAIRVIT</small></div>',unsafe_allow_html=True)
  page=st.radio('Workspace',['Image analysis','Model information'],label_visibility='collapsed')
- st.markdown('<div class="rail-div"></div><div class="rail-bottom"><div class="rail-avatar">V</div></div>',unsafe_allow_html=True)
+ st.markdown('<div class="rail-div"></div><div class="rail-label">BUILT ON</div><div class="rail-stack"><span>'+IC_HOSP.replace('width="17" height="17"','width="22" height="22"')+'</span><span>'+IC_LUNG.replace('width="17" height="17"','width="22" height="22"')+'</span><span>'+IC_STETH.replace('width="17" height="17"','width="22" height="22"')+'</span><span>'+ic('<path d="M3 12 H8 L10 6 L14 18 L16 12 H21"/>','#566b0a',22)+'</span></div><div class="rail-bottom"><div class="rail-badge">'+IC_SHIELD+'RESEARCH<br>ONLY</div><div class="rail-avatar">V</div></div>',unsafe_allow_html=True)
 
 heading='Hi, Researcher!' if page=='Image analysis' else 'Inside the model'
 subline='Let’s look at your chest X-ray analysis overview.' if page=='Image analysis' else 'Architecture, checkpoint and interpretation in one place.'
