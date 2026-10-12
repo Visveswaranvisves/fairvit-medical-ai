@@ -20,7 +20,6 @@ h1,h2,h3{letter-spacing:-.045em;color:#202021}h1{font-size:2.5rem!important;font
 [data-testid="stMetric"]{background:white;border-radius:23px;padding:20px;min-height:115px}
 [data-testid="stMetricValue"]{font-size:1.9rem;font-weight:550;letter-spacing:-.05em}
 [data-testid="stMetricLabel"]{color:#696969;font-size:12px}
-[data-testid="stVerticalBlockBorderWrapper"]>div{background:white;border:0!important;border-radius:24px;padding:16px}
 [data-testid="stFileUploaderDropzone"]{border:1px dashed #bdbabf;background:#f5f5f2;border-radius:16px}
 .stButton>button[kind="primary"]{background:#d8f36a;color:#202022;border:0;border-radius:28px;min-height:46px;font-weight:650}
 .stButton>button:disabled{background:#edf2d7;color:#74796a}
@@ -28,6 +27,29 @@ h1,h2,h3{letter-spacing:-.045em;color:#202021}h1{font-size:2.5rem!important;font
 .topline{display:flex;justify-content:space-between;align-items:center;margin:5px 0 23px;font-size:12px;color:#60615e}.badge{background:#fff;border-radius:25px;padding:9px 15px;color:#30312e}.muted{color:#71726f;font-size:12px}.viewer{background:#242426;border-radius:18px;min-height:290px;display:flex;align-items:center;justify-content:center;text-align:center;color:#bab9bd;margin:10px 0 18px;padding:25px}.viewer strong{color:#eeedf1;display:block;font-size:19px;font-weight:500;margin:15px 0 8px}.scan-icon{border:1px solid #777380;width:80px;height:95px;margin:auto;border-radius:10px;display:grid;place-items:center;color:#beb2ed;font-size:40px}
 .output{background:#252526;border-radius:24px;padding:25px;color:#fff;min-height:315px}.output h3{color:#fff!important;font-size:17px!important;letter-spacing:-.02em}.score{font-size:58px;letter-spacing:-3px;color:#d8f36a;line-height:1.2;margin:20px 0 7px}.output .muted{color:#c0bdc7}.track{height:17px;background:#4a494e;border-radius:12px;position:relative;margin:24px 0 12px}.fill{height:100%;background:#bbb0ed;border-radius:12px}.threshold{position:absolute;left:50%;top:-6px;height:29px;border-left:2px solid #d8f36a}.scale{display:flex;justify-content:space-between;color:#bdbbc4;font-size:10px}.output-status{margin-top:24px;font-size:13px;color:#eeecf3}.bubble-row{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 0 20px}.bubble{border-radius:50%;width:103px;height:103px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#bdb0ef;font-size:29px;letter-spacing:-1px}.bubble small{font-size:10px;letter-spacing:0;color:#323139}.bubble:nth-child(2){background:#d8f36a;width:83px;height:83px;font-size:23px}.foot{font-size:11px;color:#696a67;margin-top:25px}
 @media(max-width:768px){.block-container{padding:1.4rem 1rem}h1{font-size:2rem!important}.topline{gap:10px}.output{min-height:260px}.viewer{min-height:230px}[data-testid="stMetricValue"]{font-size:1.5rem}}
+
+/* Scope surfaces to named cards, never to Streamlit's structural wrappers. */
+[class*="st-key-panel_"]{background:#fff;border:1px solid #e0e2dc!important;border-radius:20px;padding:20px!important;box-sizing:border-box;min-width:0}
+[data-testid="stMetric"]{box-sizing:border-box;min-width:0;width:100%}
+[data-testid="stSidebarUserContent"]{padding:1.5rem 1rem}
+[data-testid="stCaptionContainer"] p{font-size:13px;line-height:1.5}
+[data-testid="stMainBlockContainer"]{width:100%;max-width:1600px;padding:2.8rem 2rem 2rem}
+[data-testid="stHorizontalBlock"]{min-width:0}
+[data-testid="stColumn"]{min-width:0}
+@media(max-width:768px){[data-testid="stMainBlockContainer"]{padding:2rem 1rem}[class*="st-key-panel_"]{padding:16px!important}}
+
+[data-testid="stSidebar"] .brand{color:#fff!important}
+[data-testid="stMetric"]{padding:18px 20px;min-height:96px;border:1px solid #d2d5cf}
+[data-testid="stMetricValue"]{font-size:1.8rem}
+[data-testid="stSidebar"] [role="radiogroup"] label p{font-size:14px}
+[data-testid="stCaptionContainer"]{color:#565953}
+.topline{margin:0 0 4px;font-size:13px;flex-wrap:wrap;gap:8px}
+.viewer{min-height:280px;margin:4px 0 12px}.viewer .muted{color:#bdbac5;font-size:14px}
+.output{box-sizing:border-box;min-height:300px;padding:24px}
+.muted{font-size:13px;color:#555952}.navnote{font-size:12px}.foot{font-size:12px}
+.side-card{padding:18px;margin-top:24px}.brand{margin-bottom:26px}
+h1{font-size:2.2rem!important}
+
 </style>''',unsafe_allow_html=True)
 class FairViTMed(nn.Module):
     def __init__(self):
@@ -82,9 +104,8 @@ if page=='Image analysis':
  a.metric('Architecture','ViT-B/16')
  b.metric('Model input','224 × 224')
  c.metric('Decision threshold','0.50')
- st.write('')
  left,right=st.columns([1.05,1],gap='medium')
- with left,st.container(border=True):
+ with left,st.container(border=False,key="panel_1"):
   st.subheader('Image workspace')
   uploaded=st.file_uploader('Add a chest X-ray sample',type=['png','jpg','jpeg'])
   image=None;digest=None
@@ -110,7 +131,7 @@ if page=='Image analysis':
     st.error('Model loading or inference failed.')
     with st.expander('Technical details'):st.exception(exc)
  with right:
-  with st.container(border=True):
+  with st.container(border=False,key="panel_2"):
    st.subheader('Input preparation')
    st.markdown('<div class="bubble-row"><div class="bubble">224<small>PIXELS PER SIDE</small></div><div class="bubble">RGB<small>3 CHANNELS</small></div></div>',unsafe_allow_html=True)
    st.caption('Resized to 224 × 224, then converted to a tensor. Matches the current training dataloader.')
@@ -124,12 +145,12 @@ if page=='Image analysis':
  st.caption('Research demonstration only. Not validated for clinical use; cannot diagnose or rule out disease. A low score does not mean the X-ray is normal.')
 else:
  a,b=st.columns(2)
- with a,st.container(border=True):
+ with a,st.container(border=False,key="panel_3"):
   st.subheader('Architecture & checkpoint')
   st.write('Vision Transformer B/16 with a single-output classification head.')
   st.write('Checkpoint: baseline_model.pth. This interface uses the baseline model, not a fairness-adjusted checkpoint.')
   st.code('224 × 224 RGB → ViT-B/16 → sigmoid score',language=None)
- with b,st.container(border=True):
+ with b,st.container(border=False,key="panel_4"):
   st.subheader('Reading the output')
   st.write('The model returns a score from 0 to 1. A value above 0.5 is above the configured pneumonia-class threshold.')
   st.write('This is not a calibrated clinical probability. Neither side of the threshold establishes a diagnosis or a normal X-ray.')
